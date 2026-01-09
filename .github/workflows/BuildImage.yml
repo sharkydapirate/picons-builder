@@ -12,11 +12,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build image
         run: |
-          docker build --no-cache -t ghcr.io/linuxserver/picons-builder:latest .
+          docker build --no-cache -t ghcr.io/sharkydapirate/picons-builder:latest .
       - name: Tag image
         if: ${{ github.ref == format('refs/heads/master') }}
         run: |
-          docker tag ghcr.io/linuxserver/picons-builder:latest ghcr.io/linuxserver/picons-builder:$(date +%F)
+          docker tag ghcr.io/sharkydapirate/picons-builder:latest ghcr.io/sharkydapirate/picons-builder:$(date +%F)
       - name: Login to GitHub Container Registry
         if: ${{ github.ref == format('refs/heads/master') }}
         run: |
@@ -24,14 +24,5 @@ jobs:
       - name: Push tags to GitHub Container Registry
         if: ${{ github.ref == format('refs/heads/master') }}
         run: |
-          docker push ghcr.io/linuxserver/picons-builder:$(date +%F)
-          docker push ghcr.io/linuxserver/picons-builder:latest
-      - name: Generate Repo Activity
-        if: ${{ github.ref == format('refs/heads/master') }}
-        run: |
-          sed -i -r "s|^[0-9]{4}-[0-9]{2}-[0-9]{2}|$(date +%F)|" last_pushed.md
-          git config --local user.email "ci@linuxserver.io"
-          git config --local user.name "LinuxServer-CI"
-          git add . || :
-          git commit -m '[bot] Updating push date' || :
-          git push || :
+          docker push ghcr.io/sharkydapirate/picons-builder:$(date +%F)
+          docker push ghcr.io/sharkydapirate/picons-builder:latest
